@@ -1,0 +1,71 @@
+        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+      },
+      {
+        title: "SoundHelix Song 4",
+        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+      },
+      {
+        title: "SoundHelix Song 5",
+        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+      }
+    ];
+
+    function loadSong(index) {
+      audio.src = playlist[index].url;
+      titleEl.innerText = playlist[index].title;
+      audio.play();
+      playBtn.innerHTML = '❚❚';
+    }
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '❚❚';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '►';
+      }
+    }
+
+    function skip(seconds) {
+      audio.currentTime += seconds;
+    }
+
+    function updateProgress() {
+      progress.value = Math.floor(audio.currentTime);
+      currentTimeEl.innerText = formatTime(audio.currentTime);
+    }
+
+    function loadMetadata() {
+      progress.max = Math.floor(audio.duration);
+      durationEl.innerText = formatTime(audio.duration);
+    }
+
+    function setProgress() {
+      audio.currentTime = progress.value;
+    }
+
+    function formatTime(seconds) {
+      const min = Math.floor(seconds / 60);
+      const sec = Math.floor(seconds % 60);
+      return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+    }
+
+    function toggleTheme() {
+      const currentBg = getComputedStyle(document.body).backgroundColor;
+      const isDark = currentBg.includes('15, 15, 26') || body.classList.contains('dark');
+      if (isDark) {
+        document.body.style.background = "var(--bg-light)";
+        document.body.style.color = "var(--text-light)";
+        body.classList.remove('dark');
+      } else {
+        document.body.style.background = "var(--bg-dark)";
+        document.body.style.color = "var(--text-dark)";
+        body.classList.add('dark');
+      }
+    }
+
+    loadSong(0);
+  </script>
+</body>
+</html>
